@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Boda de Esther & Julián 💍</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fbd3e9, #cbb4d4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenedor {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: aparecer 1s ease;
+        }
+
+        @keyframes aparecer {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h1 { text-align:center; color:#95261e; margin-bottom:5px; }
+        h2 { text-align:center; color:#e22b83; margin-top:0; font-weight: normal; }
+        p.subtitulo { text-align:center; color:#666; margin-bottom:25px; }
+        label { display:block; margin-top:15px; font-weight:bold; color:#555; }
+        input, select, textarea {
+            width:100%; margin-top:6px; padding:10px; border-radius:8px;
+            border:1px solid #ccc; font-size:14px;
+        }
+        textarea { resize: vertical; }
+        button {
+            width:100%; margin-top:25px; padding:12px;
+            background: linear-gradient(135deg, #511a3e, #6e89b7);
+            color:white; font-size:16px; border:none; border-radius:30px;
+            cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover { transform:scale(1.03); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+
+        /* Mensaje de agradecimiento */
+        .agradecimiento {
+            opacity: 0;
+            display: none;
+            text-align:center;
+            transition: opacity 0.6s;
+        }
+        .agradecimiento.show {
+            display: block;
+            opacity: 1;
+        }
+        .agradecimiento h2 { color:#b76e79; font-size:28px; }
+        .agradecimiento p { color:#555; font-size:16px; }
+        .corazon { font-size:42px; margin:15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+
+    <!-- FORMULARIO -->
+    <form 
+        id="bodaForm"
+        action="https://formspree.io/f/mqkwyowl"
+        method="POST"
+    >
+        <!-- Pega aquí tu URL de Formspree -->
+        <h1>💍 Boda de Esther & Julián 💍</h1>
+        <h2>27 · 06 · 2026</h2>
+        <br class="subtitulo">Gracias por acompañarnos!!<br>
+             Eres el limon, la sal y el tequila de la vida💖</br></p>
+
+        <!-- Campo oculto que Formspree necesita -->
+        <input type="hidden" name="_subject" value="Nueva respuesta de la boda">
+
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="bus">🚌 ¿Vas a venir en autobús?</label>
+        <select id="bus" name="autobus" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Sí">Sí</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="cancion">🎵 ¿Qué canción no puede faltar? 💃🕺</label>
+        <input type="text" id="cancion" name="cancion" placeholder="Ej: Bailando - Enrique Iglesias">
+
+        <label for="mensaje">💌 Déjanos un mensaje o deseo</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Tus mejores deseos para los novios"></textarea>
+
+        <button type="submit">Enviar respuesta </button>
+    </form>
+
+    <!-- MENSAJE DE AGRADECIMIENTO -->
+    <div class="agradecimiento" id="gracias">
+        <h2>¡Gracias de corazón! 💕</h2>
+        <div class="corazon">💍💞🎶</div>
+        <p>Hemos recibido tu respuesta.<br>¡Estamos deseando celebrar este día contigo! 🥂✨</p>
+    </div>
+
+</div>
+
+<script>
+const form = document.getElementById("bodaForm");
+const gracias = document.getElementById("gracias");
+
+form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            form.style.display = "none";
+            gracias.classList.add("show"); // Animación suave
+            form.reset();
+        } else {
+            alert("Hubo un error al enviar tu respuesta. Inténtalo de nuevo.");
+        }
+    } catch (error) {
+        alert("No se pudo enviar el formulario. Revisa tu conexión e inténtalo otra vez.");
+    }
+});
+</script>
+
+</body>
+</html>
+
